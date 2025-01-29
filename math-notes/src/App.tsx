@@ -1,8 +1,26 @@
+import {createBrowserRouter, RouterProvider} from 'react-router-dom';
+import '@mantine/core/styles.css';
+import {MantineProvider} from '@mantine/core';
+
+import Home from './screens/home/index.tsx';
+
+import '@/index.css';
+const paths = [
+  {
+    path: '/',
+    element: (
+      <Home/>
+    ),
+  }
+];
+const BrowserRouter = createBrowserRouter(paths);
 
 const App = () => {
   return (
-    <div className="text-4xl text-red-600">App</div>
-  )
+    <MantineProvider>
+      <RouterProvider router={BrowserRouter}/>
+    </MantineProvider>
+  );
 }
 
 export default App
