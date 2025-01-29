@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from "react";
+import {SWATCHES} from '@/constants.ts';
+import { ColorSwatch, Group } from '@mantine/core';
+import axios from 'axios';
 
 
 export default function Home() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isDrawing, setIsDrawing] = useState(false);//to check if the user is drawing or no
+    const [color, setColor] = useState('rgb(255, 255, 255)');
+    const [reset, setReset] = useState(false);
 
 
 
@@ -47,7 +52,7 @@ export default function Home() {
         if(canvas){
             const ctx = canvas.getContext('2d');
             if(ctx){
-                ctx.strokeStyle = 'white';
+                ctx.strokeStyle = color;
                 ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
                 ctx.stroke();
             }
