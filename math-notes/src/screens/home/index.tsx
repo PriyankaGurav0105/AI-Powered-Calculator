@@ -1,7 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import {SWATCHES} from '@/constants.ts';
+import Button from "@/components/Button.tsx";
 import { ColorSwatch, Group } from '@mantine/core';
 import axios from 'axios';
+
+
+interface Response{
+    expr:string;
+    result: string;
+    assign:boolean;
+}
+interface GeneratedResult{
+    expression:string;
+    answer:string;
+}
 
 
 export default function Home() {
@@ -9,7 +21,25 @@ export default function Home() {
     const [isDrawing, setIsDrawing] = useState(false);//to check if the user is drawing or no
     const [color, setColor] = useState('rgb(255, 255, 255)');
     const [reset, setReset] = useState(false);
+    const [result, setResult] = useState<GeneratedResult>();
 
+
+    useEffect(()=>{
+        if(reset){
+            resetCanvas();
+            setReset(false);
+        }
+    },[reset]);
+
+    const resetCanvas =()=>{
+        const canvas = canvasRef.current;
+        if(canvas){
+            const ctx = canvas.getContext('2d');
+            if(ctx){
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+    }
 
 
 
@@ -58,6 +88,8 @@ export default function Home() {
             }
         }
     };
+
+
 
     return(
         <canvas 
